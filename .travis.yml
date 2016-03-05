@@ -7,3 +7,4 @@ install:
 script:
     - xbuild /p:Configuration=Release AppSettingsByConvention.sln
     - mono ./testrunner/NUnit.Console.3.0.1/tools/nunit3-console.exe ./AppSettingsByConventionTests/bin/Release/AppSettingsByConventionTests.dll
+    - nuget pack ./AppSettingsByConvention/AppSettingsByConvention.csproj
