@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>AppSettingsByConvention</id>
+    <version>1.0.0</version>
+    <title>LibDependOnMe Test</title>
+    <authors>Daniel Ignat</authors>
+    <owners>Daniel Ignat</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright 2016</copyright>
+  </metadata>
+  <files>
+    <file src="bin\Release\*.dll" target="lib"/>
+  </files>
+</package>
