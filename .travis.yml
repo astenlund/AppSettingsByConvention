@@ -1,8 +1,9 @@
-language: csharp
-solution: AppSettingsByConvention.sln
+sudo: false
+language: csharp 
+
 install:
-  - nuget restore solution-name.sln
-  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
- script:
-  - xbuild /p:Configuration=Release AppSettingsByConvention.sln
-  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./AppSettingsByConventionTests/bin/Release/AppSettingsByConventionTests.dll
+    - nuget restore solution-name.sln
+    - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+script:
+    - xbuild /p:Configuration=Release AppSettingsByConvention.sln
+    - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./AppSettingsByConventionTests/bin/Release/AppSettingsByConventionTests.dll
