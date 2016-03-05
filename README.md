@@ -1,9 +1,16 @@
 # AppSettingsByConvention
  Reads settings from the appSettings section of your configuration by convention.
+ 
  The keys should follow the pattern "CLASSNAME.PROPERTYNAME".
+ 
  All properties on your config object need to appear in your configuration.
  
+ [![Build Status](https://travis-ci.org/dignite/AppSettingsByConvention.svg?branch=master)](https://travis-ci.org/dignite/AppSettingsByConvention)
+ 
 # Example usage
+
+This shows how to use this library with an interface.
+The use for having a plain old C# class with properties is similar.
 
 The target:
 
