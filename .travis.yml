@@ -6,4 +6,4 @@ install:
     - nuget install NUnit.Console -Version 3.0.1 -OutputDirectory testrunner
 script:
     - xbuild /p:Configuration=Release AppSettingsByConvention.sln
-    - mono ./testrunner/NUnit.Console.3.0.1/tools/nunit-console.exe ./AppSettingsByConventionTests/bin/Release/AppSettingsByConventionTests.dll
+    - mono ./testrunner/NUnit.Console.3.0.1/tools/nunit3-console.exe ./AppSettingsByConventionTests/bin/Release/AppSettingsByConventionTests.dll
