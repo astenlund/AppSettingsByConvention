@@ -6,6 +6,8 @@
     <title>LibDependOnMe Test</title>
     <authors>Daniel Ignat</authors>
     <owners>Daniel Ignat</owners>
+    <description>Reads settings from the appSettings section of your configuration by convention.</description>
+    <projectUrl>https://github.com/dignite/AppSettingsByConvention</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright 2016</copyright>
   </metadata>
