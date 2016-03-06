@@ -1,4 +1,4 @@
-![AppSettingsByConvention](https://rawgithub.com/dignite/AppSettingsByConvention/icon.svg)
+![AppSettingsByConvention](https://rawgithub.com/dignite/AppSettingsByConvention/master/icon.svg)
 
 # AppSettingsByConvention
  Reads settings from the appSettings section of your configuration by convention.
