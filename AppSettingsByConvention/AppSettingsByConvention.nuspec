@@ -3,7 +3,7 @@
   <metadata>
     <id>AppSettingsByConvention</id>
     <version>1.0.0</version>
-    <title>LibDependOnMe Test</title>
+    <title>AppSettingsByConvention</title>
     <authors>Daniel Ignat</authors>
     <owners>Daniel Ignat</owners>
     <description>Reads settings from the appSettings section of your configuration by convention.</description>
