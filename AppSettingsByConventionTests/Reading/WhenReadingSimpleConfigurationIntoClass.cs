@@ -17,7 +17,7 @@ namespace AppSettingsByConventionTests.Reading
                 Value3 = true
             };
 
-            var config = SettingsByConvention.ForClass<SimpleConfiguration>().Create();
+            var config = SettingsByConvention.ForClass<SimpleConfiguration>();
 
             config.ShouldBeEquivalentTo(expectedConfig);
         }

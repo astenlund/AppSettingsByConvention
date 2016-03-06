@@ -42,7 +42,7 @@ Your config file:
 Loading the configuration:
 
 ```C#
-SettingsByConvention.ForInterface<IConfiguration>().Create()
+SettingsByConvention.ForInterface<IConfiguration>()
 ```
 
 ## Using a class
@@ -68,7 +68,7 @@ Your config file:
 Loading the configuration:
 
 ```C#
-SettingsByConvention.ForClass<Configuration>().Create()
+SettingsByConvention.ForClass<Configuration>()
 ```
 
 # Inversion of Control-setup

@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace AppSettingsByConvention
 {
-    public interface IAppConfigValueProvider
+    internal interface IAppConfigValueProvider
     {
         object GetParsedByConvention(PropertyInfo propertyInfo);
     }

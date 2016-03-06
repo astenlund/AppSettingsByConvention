@@ -7,7 +7,7 @@ namespace AppSettingsByConvention
     /// The keys should follow the pattern CLASSNAME.PROPERTYNAME
     /// All properties on your config object need to appear in your configuration
     /// 
-    /// Example usage: SettingsByConvention.ForInterface<IConfiguration>().Create()
+    /// Example usage: SettingsByConvention.ForInterface<IConfiguration>()
     /// 
     /// Inversion of Control-setup: Since the values never change after application starts,
     /// I recommend that you register as a Singleton.
@@ -21,16 +21,16 @@ namespace AppSettingsByConvention
             AppConfigValueParserFactory = () => new AppConfigValueParser();
         }
 
-        public static IAppSettingIntoClass<T> ForClass<T>() where T : class, new()
+        public static T ForClass<T>() where T : class, new()
         {
             var appConfigValueParser = AppConfigValueParserFactory();
-            return new AppSettingIntoClass<T>(new AppConfigValueProvider<T>(appConfigValueParser));
+            return new AppSettingIntoClass<T>(new AppConfigValueProvider<T>(appConfigValueParser)).Create();
         }
 
-        public static IAppSettingIntoInterface<T> ForInterface<T>() where T : class
+        public static T ForInterface<T>() where T : class
         {
             var appConfigValueParser = AppConfigValueParserFactory();
-            return new AppSettingIntoInterface<T>(new AppConfigValueProvider<T>(appConfigValueParser));
+            return new AppSettingIntoInterface<T>(new AppConfigValueProvider<T>(appConfigValueParser)).Create();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace AppSettingsByConvention
 {
-    public interface IAppSettingIntoClass<out TPlainOldCsharpClass> where TPlainOldCsharpClass : class, new()
+    internal interface IAppSettingIntoClass<out TPlainOldCsharpClass> where TPlainOldCsharpClass : class, new()
     {
         TPlainOldCsharpClass Create();
     }
