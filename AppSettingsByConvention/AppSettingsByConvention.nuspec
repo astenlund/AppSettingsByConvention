@@ -2,16 +2,15 @@
 <package>
   <metadata>
     <id>AppSettingsByConvention</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>AppSettingsByConvention</title>
     <authors>Daniel Ignat</authors>
     <owners>Daniel Ignat</owners>
     <description>Reads settings from the appSettings section of your configuration by convention.</description>
     <projectUrl>https://github.com/dignite/AppSettingsByConvention</projectUrl>
+    <iconUrl>https://rawgithub.com/dignite/AppSettingsByConvention/master/icon_64x64.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright 2016</copyright>
+    <tags>AppSettings ConfigurationManager</tags>
   </metadata>
-  <files>
-    <file src="bin/Release/*.*" target="lib"/>
-  </files>
 </package>
