@@ -4,26 +4,26 @@ using System.Reflection;
 
 namespace AppSettingsByConvention
 {
-    internal interface IAppConfigValueProvider
+    internal interface IAppSettingValueProvider
     {
         object GetParsedByConvention(PropertyInfo propertyInfo);
     }
 
-    internal class AppConfigValueProvider<T> : IAppConfigValueProvider
+    internal class AppSettingValueProvider<T> : IAppSettingValueProvider
     {
         private readonly string _typeName;
-        private readonly IAppConfigValueParser _appConfigValueParser;
+        private readonly IValueParser _valueParser;
 
-        public AppConfigValueProvider(IAppConfigValueParser appConfigValueParser)
+        public AppSettingValueProvider(IValueParser valueParser)
         {
             _typeName = typeof(T).Name;
-            _appConfigValueParser = appConfigValueParser;
+            _valueParser = valueParser;
         }
 
         public object GetParsedByConvention(PropertyInfo propertyInfo)
         {
             var appConfigValue = GetByConvention(propertyInfo.Name);
-            return _appConfigValueParser.ParseIntoCorrectType(propertyInfo, appConfigValue);
+            return _valueParser.ParseIntoCorrectType(propertyInfo, appConfigValue);
         }
 
         private string GetByConvention(string propertyName)

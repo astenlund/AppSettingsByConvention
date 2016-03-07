@@ -58,10 +58,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppConfigValueParser.cs" />
-    <Compile Include="AppConfigValueProvider.cs" />
-    <Compile Include="AppSettingIntoClass.cs" />
-    <Compile Include="AppSettingIntoInterface.cs" />
+    <Compile Include="ValueParser.cs" />
+    <Compile Include="AppSettingValueProvider.cs" />
+    <Compile Include="AppSettingsIntoClassLoader.cs" />
+    <Compile Include="AppSettingsIntoInterfaceLoader.cs" />
     <Compile Include="SettingsByConvention.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

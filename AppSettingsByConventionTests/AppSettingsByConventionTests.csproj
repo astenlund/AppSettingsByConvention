@@ -61,10 +61,16 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Reading\SimpleConfiguration.cs" />
+    <Compile Include="ConfigurationTargets\IConfigurationWithUnsupporterdPropertyType.cs" />
+    <Compile Include="ConfigurationTargets\ISimpleConfiguration.cs" />
+    <Compile Include="ConfigurationTargets\SimpleConfigurationWithoutEmptyConstructor.cs" />
+    <Compile Include="ConfigurationTargets\IUnconfiguredConfiguration.cs" />
+    <Compile Include="ConfigurationTargets\SimpleConfiguration.cs" />
+    <Compile Include="Reading\WhenReadingConfigurationWithUnsupporterdPropertyTypeIntoInterface.cs" />
     <Compile Include="Reading\WhenReadingSimpleConfigurationIntoClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reading\WhenReadingSimpleConfigurationIntoInterface.cs" />
+    <Compile Include="Reading\WhenReadingUnconfiguredConfigurationIntoInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -7,15 +7,15 @@ namespace AppSettingsByConvention
         TPlainOldCsharpClass Create();
     }
 
-    internal class AppSettingIntoClass<TPlainOldCsharpClass> : IAppSettingIntoClass<TPlainOldCsharpClass> where TPlainOldCsharpClass : class, new()
+    internal class AppSettingsIntoClassLoader<TPlainOldCsharpClass> : IAppSettingIntoClass<TPlainOldCsharpClass> where TPlainOldCsharpClass : class, new()
     {
         private readonly PropertyInfo[] _allPropertyInfos;
-        private readonly IAppConfigValueProvider _appConfigValueProvider;
+        private readonly IAppSettingValueProvider _appSettingValueProvider;
 
-        public AppSettingIntoClass(IAppConfigValueProvider appConfigValueProvider)
+        public AppSettingsIntoClassLoader(IAppSettingValueProvider appSettingValueProvider)
         {
             _allPropertyInfos = typeof(TPlainOldCsharpClass).GetProperties();
-            _appConfigValueProvider = appConfigValueProvider;
+            _appSettingValueProvider = appSettingValueProvider;
         }
 
         public TPlainOldCsharpClass Create()
@@ -23,7 +23,7 @@ namespace AppSettingsByConvention
             var instance = new TPlainOldCsharpClass();
             foreach (var propertyInfo in _allPropertyInfos)
             {
-                var parameter = _appConfigValueProvider.GetParsedByConvention(propertyInfo);
+                var parameter = _appSettingValueProvider.GetParsedByConvention(propertyInfo);
                 propertyInfo.SetMethod.Invoke(instance, new[] { parameter });
             }
             return instance;

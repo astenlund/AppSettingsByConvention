@@ -3,12 +3,12 @@ using System.Reflection;
 
 namespace AppSettingsByConvention
 {
-    public interface IAppConfigValueParser
+    public interface IValueParser
     {
         object ParseIntoCorrectType(PropertyInfo propertyInfo, string appConfigValue);
     }
 
-    internal class AppConfigValueParser : IAppConfigValueParser
+    internal class ValueParser : IValueParser
     {
         public object ParseIntoCorrectType(PropertyInfo propertyInfo, string appConfigValue)
         {

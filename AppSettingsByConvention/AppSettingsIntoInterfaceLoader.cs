@@ -11,20 +11,20 @@ namespace AppSettingsByConvention
         TInterface Create();
     }
 
-    internal class AppSettingIntoInterface<TInterface> : IAppSettingIntoInterface<TInterface> where TInterface : class
+    internal class AppSettingsIntoInterfaceLoader<TInterface> : IAppSettingIntoInterface<TInterface> where TInterface : class
     {
         private readonly PropertyInfo[] _allPropertyInfos;
-        private readonly IAppConfigValueProvider _appConfigValueProvider;
+        private readonly IAppSettingValueProvider _appSettingValueProvider;
 
-        public AppSettingIntoInterface(IAppConfigValueProvider appConfigValueProvider)
+        public AppSettingsIntoInterfaceLoader(IAppSettingValueProvider appSettingValueProvider)
         {
             var configurationType = typeof(TInterface);
             if (configurationType.IsInterface == false)
             {
-                throw new InvalidOperationException("TInterface is not an interface");
+                throw new InvalidOperationException($"{typeof (TInterface)} is not an interface");
             }
             _allPropertyInfos = configurationType.GetProperties();
-            _appConfigValueProvider = appConfigValueProvider;
+            _appSettingValueProvider = appSettingValueProvider;
         }
 
         public TInterface Create()
@@ -32,7 +32,7 @@ namespace AppSettingsByConvention
             IDictionary<string, object> instance = new ExpandoObject();
             foreach (var propertyInfo in _allPropertyInfos)
             {
-                var parameter = _appConfigValueProvider.GetParsedByConvention(propertyInfo);
+                var parameter = _appSettingValueProvider.GetParsedByConvention(propertyInfo);
                 instance.Add(propertyInfo.Name, parameter);
             }
             return instance.ActLike<TInterface>();
