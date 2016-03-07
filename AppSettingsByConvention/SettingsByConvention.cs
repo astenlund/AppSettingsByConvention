@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace AppSettingsByConvention
@@ -19,16 +20,23 @@ namespace AppSettingsByConvention
     /// </summary>
     public static class SettingsByConvention
     {
-        public static Func<IValueParser> GetValueParser { get; set; }
+        public static readonly Dictionary<Type, Func<string, object>> ParserMappings;
+        public static Func<IParser> ParserFactory { get; set; }
 
         static SettingsByConvention()
         {
-            GetValueParser = () => new ValueParser();
+            ParserMappings = new Dictionary<Type, Func<string, object>>
+                {
+                    {typeof(string), input => input},
+                    {typeof(int), input => int.Parse(input)},
+                    {typeof(bool), input => bool.Parse(input)}
+                };
+            ParserFactory = () => new Parser(ParserMappings);
         }
 
         public static object For(Type type)
         {
-            var parser = GetValueParser();
+            var parser = ParserFactory();
             var closedProviderType = typeof (AppSettingValueProvider<>).MakeGenericType(type);
             var appConfigValueProvider = Activator.CreateInstance(closedProviderType, parser);
 
@@ -61,7 +69,7 @@ namespace AppSettingsByConvention
 
         private static IAppSettingValueProvider GetAppSettingValueProvider<T>() where T : class
         {
-            var appConfigValueParser = GetValueParser();
+            var appConfigValueParser = ParserFactory();
             return new AppSettingValueProvider<T>(appConfigValueParser);
         }
     }

@@ -12,18 +12,18 @@ namespace AppSettingsByConvention
     internal class AppSettingValueProvider<T> : IAppSettingValueProvider
     {
         private readonly string _typeName;
-        private readonly IValueParser _valueParser;
+        private readonly IParser _parser;
 
-        public AppSettingValueProvider(IValueParser valueParser)
+        public AppSettingValueProvider(IParser parser)
         {
             _typeName = typeof(T).Name;
-            _valueParser = valueParser;
+            _parser = parser;
         }
 
         public object GetParsedByConvention(PropertyInfo propertyInfo)
         {
             var appConfigValue = GetByConvention(propertyInfo.Name);
-            return _valueParser.ParseIntoCorrectType(propertyInfo, appConfigValue);
+            return _parser.ParseIntoCorrectType(propertyInfo, appConfigValue);
         }
 
         private string GetByConvention(string propertyName)
