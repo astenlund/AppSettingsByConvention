@@ -36,25 +36,21 @@ namespace AppSettingsByConvention
 
         public static object For(Type type)
         {
-            var parser = ParserFactory();
-            var closedProviderType = typeof (AppSettingValueProvider<>).MakeGenericType(type);
-            var appConfigValueProvider = Activator.CreateInstance(closedProviderType, parser);
-
-            Type appSettingLoaderType;
+            MethodInfo createMethod;
             if (type.IsInterface)
             {
-                appSettingLoaderType = typeof (AppSettingsIntoInterfaceLoader<>).MakeGenericType(type);
+                createMethod = typeof (SettingsByConvention).GetMethod("ForInterface").MakeGenericMethod(type);
             }
             else if (type.IsClass && type.GetConstructor(Type.EmptyTypes) != null)
             {
-                appSettingLoaderType = typeof(AppSettingsIntoClassLoader<>).MakeGenericType(type);
+                createMethod = typeof(SettingsByConvention).GetMethod("ForClass").MakeGenericMethod(type);
             }
             else
             {
                 throw new InvalidOperationException($"Type {type} is neither an interface nor a class with an empty constructor.");
             }
-            var appSettingLoader = Activator.CreateInstance(appSettingLoaderType, appConfigValueProvider);
-            return appSettingLoaderType.GetMethod("Create").Invoke(appSettingLoader, new object[0]);
+            //null, null = static method that is parameterless
+            return createMethod.Invoke(null, null);
         }
 
         public static T ForClass<T>() where T : class, new()
