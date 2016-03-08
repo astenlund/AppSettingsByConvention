@@ -65,12 +65,14 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ConfigurationTargets\ConfigurationWithUnsupporterdPropertyType.cs" />
     <Compile Include="ConfigurationTargets\IConfigurationWithUnsupporterdPropertyType.cs" />
     <Compile Include="ConfigurationTargets\ISampleConfiguration.cs" />
     <Compile Include="ConfigurationTargets\SimpleConfigurationWithoutEmptyConstructor.cs" />
     <Compile Include="ConfigurationTargets\IUnconfiguredConfiguration.cs" />
     <Compile Include="ConfigurationTargets\SampleConfiguration.cs" />
     <Compile Include="ConfigurationTargets\UnconfiguredConnectionStringConfiguration.cs" />
+    <Compile Include="Reading\WhenReadingConfigurationWithUnsupporterdPropertyTypeIntoClass.cs" />
     <Compile Include="Reading\WhenReadingConfigurationWithUnsupporterdPropertyTypeIntoInterface.cs" />
     <Compile Include="Reading\WhenReadingSampleConfigurationIntoClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

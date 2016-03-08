@@ -25,7 +25,11 @@ namespace AppSettingsByConvention
             var instance = new TPlainOldCsharpClass();
             foreach (var propertyInfo in _allPropertyInfos)
             {
-                var provider = _appSettingValueProviders.First(p => p.IsMatch(propertyInfo));
+                var provider = _appSettingValueProviders.FirstOrDefault(p => p.IsMatch(propertyInfo));
+                if (provider == null)
+                {
+                    throw new UnsupportedPropertyTypeException(propertyInfo.PropertyType);
+                }
                 var parameter = provider.GetParsedByConvention(propertyInfo);
                 propertyInfo.SetMethod.Invoke(instance, new[] { parameter });
             }

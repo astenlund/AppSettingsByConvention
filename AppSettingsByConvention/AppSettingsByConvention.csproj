@@ -67,6 +67,7 @@
     <Compile Include="AppSettingsIntoInterfaceLoader.cs" />
     <Compile Include="SettingsByConvention.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnsupportedPropertyTypeException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

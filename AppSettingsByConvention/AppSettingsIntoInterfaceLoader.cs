@@ -37,7 +37,7 @@ namespace AppSettingsByConvention
                 var provider = _appSettingValueProviders.FirstOrDefault(p => p.IsMatch(propertyInfo));
                 if (provider == null)
                 {
-                    throw new InvalidOperationException($"Cannot handle properties of type {propertyInfo.PropertyType}");
+                    throw new UnsupportedPropertyTypeException(propertyInfo.PropertyType);
                 }
                 var parameter = provider.GetParsedByConvention(propertyInfo);
                 instance.Add(propertyInfo.Name, parameter);
