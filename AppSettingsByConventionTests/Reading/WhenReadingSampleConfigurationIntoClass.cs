@@ -2,24 +2,20 @@
 using AppSettingsByConvention;
 using AppSettingsByConventionTests.ConfigurationTargets;
 using FluentAssertions;
+using Moq;
 using NUnit.Framework;
 
 namespace AppSettingsByConventionTests.Reading
 {
     [TestFixture]
-    public class WhenReadingSimpleConfigurationIntoClass
+    public class WhenReadingSampleConfigurationIntoClass
     {
         [Test]
         public void ShouldWork()
         {
-            var expectedConfig = new SimpleConfiguration
-            {
-                Value1 = "Value1FromAppConfig",
-                Value2 = 1337,
-                Value3 = true
-            };
+            var expectedConfig = GetExpectedConfig();
 
-            var config = SettingsByConvention.ForClass<SimpleConfiguration>();
+            var config = SettingsByConvention.ForClass<SampleConfiguration>();
 
             config.ShouldBeEquivalentTo(expectedConfig);
         }
@@ -27,16 +23,29 @@ namespace AppSettingsByConventionTests.Reading
         [Test]
         public void ShouldWorkWithRuntimeType()
         {
-            var expectedConfig = new SimpleConfiguration
+            var expectedConfig = GetExpectedConfig();
+
+            var config = SettingsByConvention.For(typeof(SampleConfiguration));
+
+            config.ShouldBeEquivalentTo(expectedConfig, options => options.RespectingRuntimeTypes());
+        }
+
+        private static SampleConfiguration GetExpectedConfig()
+        {
+            var expectedConnectionString =
+                Mock.Of<IConnectionString>(x => x.Value == "CString" && x.ProviderName == "PName");
+            var expectedConnectionString2 =
+                Mock.Of<IConnectionString>(x => x.Value == "CString2");
+
+            var expectedConfig = new SampleConfiguration
             {
                 Value1 = "Value1FromAppConfig",
                 Value2 = 1337,
-                Value3 = true
+                Value3 = true,
+                ConnectionString = expectedConnectionString,
+                ConnectionStringWithoutProviderName = expectedConnectionString2
             };
-
-            var config = SettingsByConvention.For(typeof(SimpleConfiguration));
-
-            config.ShouldBeEquivalentTo(expectedConfig, options => options.RespectingRuntimeTypes());
+            return expectedConfig;
         }
 
         [Test]

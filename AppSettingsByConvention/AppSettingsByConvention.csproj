@@ -58,6 +58,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionString.cs" />
+    <Compile Include="ConnectionStringValueProvider.cs" />
+    <Compile Include="IConnectionString.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="AppSettingValueProvider.cs" />
     <Compile Include="AppSettingsIntoClassLoader.cs" />

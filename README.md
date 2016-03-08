@@ -7,6 +7,8 @@
  
  All properties on your config object need to appear in your configuration.
  
+ To read a connection string, use AppSettingsByConvention.IConnectionString as a property, the same naming rules apply.
+ 
  [![Build Status](https://travis-ci.org/dignite/AppSettingsByConvention.svg?branch=master)](https://travis-ci.org/dignite/AppSettingsByConvention)
  
 
@@ -28,12 +30,17 @@ The target:
 ```C#
 public interface IConfiguration {
 	public string Value { get; }
+	public AppSettingsByConvention.IConnectionString ConnString { get; }
 }
 ```
 
 Your config file:
 
 ```XML
+    <connectionStrings>
+	    <add name="IConfiguration.ConnString" connectionString="Server=myServerAddress;Database=myDataBase;User Id=myUsername;
+Password=myPassword;" providerName="System.Data.SqlClient" />
+	</connectionStrings>
 	<appSettings>
 		<add key="IConfiguration.Value" value="ReadThis" />
 	</appSettings>
@@ -43,6 +50,17 @@ Loading the configuration:
 
 ```C#
 SettingsByConvention.ForInterface<IConfiguration>()
+
+// Result:
+// {
+//     Value = "ReadThis",
+//     ConnString =
+//     {
+//         Value = "Server=myServerAddress;Database=myDataBase;User Id=myUsername;
+Password=myPassword;",
+//         ProviderName = "System.Data.SqlClient"
+//     }
+// }
 ```
 
 ## Using a class
@@ -54,12 +72,17 @@ The target:
 ```C#
 public class Configuration {
 	public string Value { get; set; }
+	public AppSettingsByConvention.IConnectionString ConnString { get; set; }
 }
 ```
 
 Your config file:
 
 ```XML
+    <connectionStrings>
+	    <add name="Configuration.ConnString" connectionString="Server=myServerAddress;Database=myDataBase;User Id=myUsername;
+Password=myPassword;" />
+	</connectionStrings>
 	<appSettings>
 		<add key="Configuration.Value" value="ReadThis" />
 	</appSettings>
@@ -69,6 +92,17 @@ Loading the configuration:
 
 ```C#
 SettingsByConvention.ForClass<Configuration>()
+
+// Result:
+// {
+//     Value = "ReadThis",
+//     ConnString =
+//     {
+//         Value = "Server=myServerAddress;Database=myDataBase;User Id=myUsername;
+Password=myPassword;",
+//         ProviderName = null
+//     }
+// }
 ```
 
 # Inversion of Control-setup

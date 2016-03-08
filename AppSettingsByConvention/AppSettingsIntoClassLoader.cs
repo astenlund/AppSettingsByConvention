@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace AppSettingsByConvention
 {
@@ -10,12 +12,12 @@ namespace AppSettingsByConvention
     internal class AppSettingsIntoClassLoader<TPlainOldCsharpClass> : IAppSettingIntoClass<TPlainOldCsharpClass> where TPlainOldCsharpClass : class, new()
     {
         private readonly PropertyInfo[] _allPropertyInfos;
-        private readonly IAppSettingValueProvider _appSettingValueProvider;
+        private readonly IEnumerable<IValueProvider> _appSettingValueProviders;
 
-        public AppSettingsIntoClassLoader(IAppSettingValueProvider appSettingValueProvider)
+        public AppSettingsIntoClassLoader(IEnumerable<IValueProvider> appSettingValueProviders)
         {
             _allPropertyInfos = typeof(TPlainOldCsharpClass).GetProperties();
-            _appSettingValueProvider = appSettingValueProvider;
+            _appSettingValueProviders = appSettingValueProviders;
         }
 
         public TPlainOldCsharpClass Create()
@@ -23,7 +25,8 @@ namespace AppSettingsByConvention
             var instance = new TPlainOldCsharpClass();
             foreach (var propertyInfo in _allPropertyInfos)
             {
-                var parameter = _appSettingValueProvider.GetParsedByConvention(propertyInfo);
+                var provider = _appSettingValueProviders.First(p => p.IsMatch(propertyInfo));
+                var parameter = provider.GetParsedByConvention(propertyInfo);
                 propertyInfo.SetMethod.Invoke(instance, new[] { parameter });
             }
             return instance;

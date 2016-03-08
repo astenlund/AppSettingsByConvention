@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Reflection;
 
 namespace AppSettingsByConvention
@@ -8,6 +9,9 @@ namespace AppSettingsByConvention
     /// Reads settings from the appSettings section of your configuration by convention
     /// The keys should follow the pattern CLASSNAME.PROPERTYNAME
     /// All properties on your config object need to appear in your configuration
+    /// 
+    /// To read a connection string, use AppSettingsByConvention.IConnectionString as a property,
+    /// the same naming rules apply.
     /// 
     /// Example use:
     ///   SettingsByConvention.ForInterface<IConfiguration>()
@@ -55,18 +59,19 @@ namespace AppSettingsByConvention
 
         public static T ForClass<T>() where T : class, new()
         {
-            return new AppSettingsIntoClassLoader<T>(GetAppSettingValueProvider<T>()).Create();
+            return new AppSettingsIntoClassLoader<T>(GetValueProviders<T>()).Create();
         }
 
         public static T ForInterface<T>() where T : class
         {
-            return new AppSettingsIntoInterfaceLoader<T>(GetAppSettingValueProvider<T>()).Create();
+            return new AppSettingsIntoInterfaceLoader<T>(GetValueProviders<T>()).Create();
         }
 
-        private static IAppSettingValueProvider GetAppSettingValueProvider<T>() where T : class
+        private static IEnumerable<IValueProvider> GetValueProviders<T>() where T : class
         {
-            var appConfigValueParser = ParserFactory();
-            return new AppSettingValueProvider<T>(appConfigValueParser);
+            var appSettingValueParser = ParserFactory();
+            yield return new AppSettingValueProvider<T>(appSettingValueParser);
+            yield return new ConnectionStringValueProvider<T>();
         }
     }
 }

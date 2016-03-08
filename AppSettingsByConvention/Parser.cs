@@ -6,6 +6,7 @@ namespace AppSettingsByConvention
 {
     public interface IParser
     {
+        bool IsMatch(PropertyInfo propertyInfo);
         object ParseIntoCorrectType(PropertyInfo propertyInfo, string appConfigValue);
     }
 
@@ -18,14 +19,14 @@ namespace AppSettingsByConvention
             _parsers = parsers;
         }
 
+        public bool IsMatch(PropertyInfo propertyInfo)
+        {
+            return _parsers.ContainsKey(propertyInfo.PropertyType);
+        }
+
         public object ParseIntoCorrectType(PropertyInfo propertyInfo, string appConfigValue)
         {
-            var propertyType = propertyInfo.PropertyType;
-            if (_parsers.ContainsKey(propertyType) == false)
-            {
-                throw new InvalidOperationException($"Cannot handle properties of type {propertyType}");
-            }
-            return _parsers[propertyType].Invoke(appConfigValue);
+            return _parsers[propertyInfo.PropertyType].Invoke(appConfigValue);
         }
     }
 }

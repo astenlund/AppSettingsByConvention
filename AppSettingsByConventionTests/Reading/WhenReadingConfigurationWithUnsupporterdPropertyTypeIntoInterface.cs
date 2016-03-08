@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using AppSettingsByConvention;
 using AppSettingsByConventionTests.ConfigurationTargets;
 using FluentAssertions;
