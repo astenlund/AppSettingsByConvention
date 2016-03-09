@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AppSettingsByConvention;
 using AppSettingsByConventionTests.ConfigurationTargets;
 using FluentAssertions;
@@ -42,6 +43,11 @@ namespace AppSettingsByConventionTests.Reading
                 Value1 = "Value1FromAppConfig",
                 Value2 = 1337,
                 Value3 = true,
+                List = new List<string>
+                {
+                    "one", "two", "three"
+                },
+                Array = new[] { "1", "2", "3" },
                 ConnectionString = expectedConnectionString,
                 ConnectionStringWithoutProviderName = expectedConnectionString2
             };

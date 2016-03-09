@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Reflection;
 
 namespace AppSettingsByConvention
@@ -25,15 +26,20 @@ namespace AppSettingsByConvention
     public static class SettingsByConvention
     {
         public static readonly Dictionary<Type, Func<string, object>> ParserMappings;
+        public static char ListSeparator { get; set; }
         public static Func<IParser> ParserFactory { get; set; }
 
         static SettingsByConvention()
         {
+            ListSeparator = ';';
+            Func<string, string[]> stringListParser = input => input.Split(ListSeparator);
             ParserMappings = new Dictionary<Type, Func<string, object>>
                 {
                     {typeof(string), input => input},
                     {typeof(int), input => int.Parse(input)},
-                    {typeof(bool), input => bool.Parse(input)}
+                    {typeof(bool), input => bool.Parse(input)},
+                    {typeof(string[]), stringListParser},
+                    {typeof(List<string>), input => stringListParser(input).ToList()}
                 };
             ParserFactory = () => new Parser(ParserMappings);
         }
