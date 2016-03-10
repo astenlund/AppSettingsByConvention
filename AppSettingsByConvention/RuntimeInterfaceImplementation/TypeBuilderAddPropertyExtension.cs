@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace AppSettingsByConventionTests.ProxyBuilding
+namespace AppSettingsByConvention.RuntimeInterfaceImplementation
 {
     internal static class TypeBuilderAddPropertyExtension
     {

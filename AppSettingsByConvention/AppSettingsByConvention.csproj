@@ -42,7 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConnectionString.cs" />
+    <Compile Include="ConnectionStringProviderBase.cs" />
+    <Compile Include="ConnectionStringProviderNameProvider.cs" />
     <Compile Include="ConnectionStringValueProvider.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="AppSettingValueProvider.cs" />
@@ -52,12 +53,6 @@
     <Compile Include="SettingsByConvention.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnsupportedPropertyTypeException.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AppSettingsByConvention.Models\AppSettingsByConvention.Models.csproj">
-      <Project>{3ae4eb27-0823-45be-8156-54e0226b9f4a}</Project>
-      <Name>AppSettingsByConvention.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

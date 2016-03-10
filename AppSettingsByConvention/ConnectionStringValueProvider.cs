@@ -1,25 +1,17 @@
-using System.Collections.Generic;
-using System.Configuration;
 using System.Reflection;
 
 namespace AppSettingsByConvention
 {
-    internal class ConnectionStringValueProvider<T> : IValueProvider
+    internal class ConnectionStringValueProvider<T> : ConnectionStringProviderBase<T>, IValueProvider
     {
         public bool IsMatch(PropertyInfo propertyInfo)
         {
-            return propertyInfo.PropertyType == typeof(IConnectionString);
+            return propertyInfo.Name.EndsWith("ConnectionString");
         }
 
         public object GetParsedByConvention(PropertyInfo propertyInfo)
         {
-            var key = $"{typeof(T).Name}.{propertyInfo.Name}";
-            var connectionStringSettings = ConfigurationManager.ConnectionStrings[key];
-            if (connectionStringSettings == null)
-            {
-                throw new KeyNotFoundException($"ConnectionString at key {key} not found");
-            }
-            return new ConnectionString(connectionStringSettings);
+            return GetValue(propertyInfo).ConnectionString;
         }
     }
 }

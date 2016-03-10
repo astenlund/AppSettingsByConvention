@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
 
-namespace AppSettingsByConventionTests.ProxyBuilding
+namespace AppSettingsByConvention.RuntimeInterfaceImplementation
 {
     internal static class InterfaceImplementationExtensions
     {

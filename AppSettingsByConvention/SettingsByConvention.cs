@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
-using AppSettingsByConventionTests.ProxyBuilding;
+using AppSettingsByConvention.RuntimeInterfaceImplementation;
 
 namespace AppSettingsByConvention
 {
@@ -89,8 +89,9 @@ namespace AppSettingsByConvention
         private static IEnumerable<IValueProvider> GetValueProviders<T>() where T : class
         {
             var appSettingValueParser = ParserFactory();
-            yield return new AppSettingValueProvider<T>(appSettingValueParser);
             yield return new ConnectionStringValueProvider<T>();
+            yield return new ConnectionStringProviderNameProvider<T>();
+            yield return new AppSettingValueProvider<T>(appSettingValueParser);
         }
     }
 }

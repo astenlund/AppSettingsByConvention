@@ -11,18 +11,15 @@ namespace AppSettingsByConventionTests.ConfigurationTargets
         public bool Value3 { get; set; }
         public List<string> List { get; set; }
         public string[] Array { get; set; }
-        public IConnectionString ConnectionString { get; set; }
-        public IConnectionString ConnectionStringWithoutProviderName { get; set; }
+        public string ConnectionString { get; set; }
+        public string ConnectionStringProvider { get; set; }
+        public string ImplicitProviderConnectionString { get; set; }
+        public string ImplicitProviderConnectionStringProvider { get; set; }
 
 
         internal static SampleConfiguration GetExpectedConfig()
         {
-            var expectedConnectionString =
-                Mock.Of<IConnectionString>(x => x.Value == "CString" && x.ProviderName == "PName");
-            var expectedConnectionString2 =
-                Mock.Of<IConnectionString>(x => x.Value == "CString2");
-
-            var expectedConfig = new SampleConfiguration
+            return new SampleConfiguration
             {
                 Value1 = "Value1FromAppConfig",
                 Value2 = 1337,
@@ -32,10 +29,11 @@ namespace AppSettingsByConventionTests.ConfigurationTargets
                     "one", "two", "three"
                 },
                 Array = new[] { "1", "2", "3" },
-                ConnectionString = expectedConnectionString,
-                ConnectionStringWithoutProviderName = expectedConnectionString2
+                ConnectionString = "CString",
+                ConnectionStringProvider = "PName",
+                ImplicitProviderConnectionString = "CString2",
+                ImplicitProviderConnectionStringProvider = null
             };
-            return expectedConfig;
         }
     }
 }
