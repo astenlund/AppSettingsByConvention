@@ -80,6 +80,7 @@
     <Compile Include="Reading\WhenReadingSampleConfigurationIntoInterface.cs" />
     <Compile Include="Reading\WhenReadingUnconfiguredConfigurationIntoInterface.cs" />
     <Compile Include="Reading\WhenReadingUnconfiguredConnectionStringConfigurationIntoClass.cs" />
+    <Compile Include="RuntimeImplementation\WhenImplementingInterfaceButProvidingClass.cs" />
     <Compile Include="WhenAnalyzingExportedTypes.cs" />
   </ItemGroup>
   <ItemGroup>
