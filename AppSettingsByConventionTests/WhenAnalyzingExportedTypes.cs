@@ -14,7 +14,6 @@ namespace AppSettingsByConventionTests
             var whiteList = new []
             {
                 typeof(SettingsByConvention),
-                typeof(IConnectionString),
                 typeof(IParser),
                 typeof(UnsupportedPropertyTypeException)
             };

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
+using AppSettingsByConventionTests.ProxyBuilding;
 
 namespace AppSettingsByConvention
 {
@@ -49,7 +50,7 @@ namespace AppSettingsByConvention
             MethodInfo createMethod;
             if (type.IsInterface)
             {
-                createMethod = typeof (SettingsByConvention).GetMethod("ForInterface").MakeGenericMethod(type);
+                createMethod = typeof(SettingsByConvention).GetMethod("ForInterface").MakeGenericMethod(type);
             }
             else if (type.IsClass && type.GetConstructor(Type.EmptyTypes) != null)
             {
@@ -59,18 +60,30 @@ namespace AppSettingsByConvention
             {
                 throw new InvalidOperationException($"Type {type} is neither an interface nor a class with an empty constructor.");
             }
-            //null, null = static method that is parameterless
-            return createMethod.Invoke(null, null);
+            try
+            {
+                //null, null = static method that is parameterless
+                return createMethod.Invoke(null, null);
+            }
+            catch (TargetInvocationException exception)
+            {
+                throw exception.InnerException ?? exception;
+            }
         }
 
-        public static T ForClass<T>() where T : class, new()
+        public static TClassWithDefaultConstructor ForClass<TClassWithDefaultConstructor>() where TClassWithDefaultConstructor : class, new()
         {
-            return new AppSettingsIntoClassLoader<T>(GetValueProviders<T>()).Create();
+            return new AppSettingsIntoClassLoader<TClassWithDefaultConstructor>(GetValueProviders<TClassWithDefaultConstructor>()).Create();
         }
 
-        public static T ForInterface<T>() where T : class
+        public static TInterface ForInterface<TInterface>() where TInterface : class
         {
-            return new AppSettingsIntoInterfaceLoader<T>(GetValueProviders<T>()).Create();
+            var configurationType = typeof(TInterface);
+            if (configurationType.IsInterface == false)
+            {
+                throw new InvalidOperationException($"{typeof(TInterface)} is not an interface");
+            }
+            return (TInterface)For(configurationType.ImplementClassWithProperties());
         }
 
         private static IEnumerable<IValueProvider> GetValueProviders<T>() where T : class

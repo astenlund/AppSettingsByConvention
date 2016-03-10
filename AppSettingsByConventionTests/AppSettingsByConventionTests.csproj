@@ -82,15 +82,22 @@
     <Compile Include="WhenAnalyzingExportedTypes.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppSettingsByConvention.Models\AppSettingsByConvention.Models.csproj">
+      <Project>{3ae4eb27-0823-45be-8156-54e0226b9f4a}</Project>
+      <Name>AppSettingsByConvention.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppSettingsByConvention\AppSettingsByConvention.csproj">
       <Project>{942B42A0-F2DF-4AB0-9D49-FFEBBAD68A5D}</Project>
       <Name>AppSettingsByConvention</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

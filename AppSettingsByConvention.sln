@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSettingsByConvention", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSettingsByConventionTests", "AppSettingsByConventionTests\AppSettingsByConventionTests.csproj", "{F655CCD8-B941-4428-8C0B-098C6C6F352E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSettingsByConvention.Models", "AppSettingsByConvention.Models\AppSettingsByConvention.Models.csproj", "{3AE4EB27-0823-45BE-8156-54E0226B9F4A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F655CCD8-B941-4428-8C0B-098C6C6F352E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F655CCD8-B941-4428-8C0B-098C6C6F352E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F655CCD8-B941-4428-8C0B-098C6C6F352E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AE4EB27-0823-45BE-8156-54E0226B9F4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AE4EB27-0823-45BE-8156-54E0226B9F4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AE4EB27-0823-45BE-8156-54E0226B9F4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AE4EB27-0823-45BE-8156-54E0226B9F4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
