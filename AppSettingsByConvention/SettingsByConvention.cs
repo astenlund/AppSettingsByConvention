@@ -12,8 +12,9 @@ namespace AppSettingsByConvention
     /// The keys should follow the pattern CLASSNAME.PROPERTYNAME
     /// All properties on your config object need to appear in your configuration
     /// 
-    /// To read a connection string, use AppSettingsByConvention.IConnectionString as a property,
-    /// the same naming rules apply.
+    /// To read a connection string value, use string property ending with ConnectionString
+    /// To read a connection string provider name, use string property ending with ConnectionStringProvider
+    /// In both cases the connection string key will be CLASSNAME.PROPERTYNAME, minus "Provider" in the case when getting the provider name.
     /// 
     /// Example use:
     ///   SettingsByConvention.ForInterface<IConfiguration>()
