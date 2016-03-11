@@ -26,7 +26,7 @@ namespace AppSettingsByConvention
     /// </summary>
     public static class SettingsByConvention
     {
-        public static readonly Dictionary<Type, Func<string, object>> ParserMappings;
+        public static Dictionary<Type, Func<string, object>> ParserMappings { get; }
         public static char ListSeparator { get; set; }
         public static Func<IParser> ParserFactory { get; set; }
 
