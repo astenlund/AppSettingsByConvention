@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using AppSettingsByConvention;
 using AppSettingsByConventionTests.ConfigurationTargets;
 using FluentAssertions;
-using Moq;
 using NUnit.Framework;
 
 namespace AppSettingsByConventionTests.Reading
