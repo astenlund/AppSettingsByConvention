@@ -82,6 +82,7 @@
     <Compile Include="Reading\WhenReadingUnconfiguredConnectionStringConfigurationIntoClass.cs" />
     <Compile Include="RuntimeImplementation\WhenImplementingInterfaceButProvidingClass.cs" />
     <Compile Include="WhenAnalyzingExportedTypes.cs" />
+    <Compile Include="WhenCreatingUnsupportedPropertyTypeException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
