@@ -7,8 +7,12 @@
  
  All properties on your config object need to appear in your configuration.
  
- To read a connection string, use AppSettingsByConvention.IConnectionString as a property, the same naming rules apply.
  
+To read a connection string value, use string property ending with ConnectionString
+To read a connection string provider name, use string property ending with ConnectionStringProvider
+In both cases the connection string key will be CLASSNAME.PROPERTYNAME, minus "Provider" in the case when getting the provider name.
+See example below.
+	
  [![Build Status](https://travis-ci.org/dignite/AppSettingsByConvention.svg?branch=master)](https://travis-ci.org/dignite/AppSettingsByConvention)
  
 
@@ -30,7 +34,8 @@ The target:
 ```C#
 public interface IConfiguration {
 	public string Value { get; }
-	public AppSettingsByConvention.IConnectionString ConnString { get; }
+	public string CoolConnectionString { get; }
+	public string CoolConnectionStringProvider { get; }
 }
 ```
 
@@ -38,8 +43,7 @@ Your config file:
 
 ```XML
     <connectionStrings>
-	    <add name="IConfiguration.ConnString" connectionString="Server=myServerAddress;Database=myDataBase;User Id=myUsername;
-Password=myPassword;" providerName="System.Data.SqlClient" />
+	    <add name="IConfiguration.CoolConnectionString" connectionString="Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;" providerName="System.Data.SqlClient" />
 	</connectionStrings>
 	<appSettings>
 		<add key="IConfiguration.Value" value="ReadThis" />
@@ -54,12 +58,8 @@ SettingsByConvention.ForInterface<IConfiguration>()
 // Result:
 // {
 //     Value = "ReadThis",
-//     ConnString =
-//     {
-//         Value = "Server=myServerAddress;Database=myDataBase;User Id=myUsername;
-Password=myPassword;",
-//         ProviderName = "System.Data.SqlClient"
-//     }
+//     CoolConnectionString = "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;",
+//     CoolConnectionStringProvider = "System.Data.SqlClient"
 // }
 ```
 
@@ -72,7 +72,8 @@ The target:
 ```C#
 public class Configuration {
 	public string Value { get; set; }
-	public AppSettingsByConvention.IConnectionString ConnString { get; set; }
+	public string CoolerConnectionString { get; }
+	public string CoolerConnectionStringProvider { get; }
 }
 ```
 
@@ -80,7 +81,7 @@ Your config file:
 
 ```XML
     <connectionStrings>
-	    <add name="Configuration.ConnString" connectionString="Server=myServerAddress;Database=myDataBase;User Id=myUsername;
+	    <add name="Configuration.CoolerConnectionString" connectionString="Server=myServerAddress;Database=myDataBase;User Id=myUsername;
 Password=myPassword;" />
 	</connectionStrings>
 	<appSettings>
@@ -96,12 +97,8 @@ SettingsByConvention.ForClass<Configuration>()
 // Result:
 // {
 //     Value = "ReadThis",
-//     ConnString =
-//     {
-//         Value = "Server=myServerAddress;Database=myDataBase;User Id=myUsername;
-Password=myPassword;",
-//         ProviderName = null
-//     }
+//     CoolerConnectionString = "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;",
+//     CoolerConnectionStringProvider = null
 // }
 ```
 

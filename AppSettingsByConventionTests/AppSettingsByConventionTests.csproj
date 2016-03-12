@@ -72,6 +72,7 @@
     <Compile Include="ConfigurationTargets\IUnconfiguredConfiguration.cs" />
     <Compile Include="ConfigurationTargets\SampleConfiguration.cs" />
     <Compile Include="ConfigurationTargets\UnconfiguredConnectionStringConfiguration.cs" />
+    <Compile Include="ConfigurationTargets\UnconfiguredConnectionStringProviderConfiguration.cs" />
     <Compile Include="Reading\WhenReadingConfigurationWithUnsupporterdPropertyTypeIntoClass.cs" />
     <Compile Include="Reading\WhenReadingConfigurationWithUnsupporterdPropertyTypeIntoInterface.cs" />
     <Compile Include="Reading\WhenReadingSampleConfigurationIntoClass.cs" />
@@ -79,10 +80,14 @@
     <Compile Include="Reading\WhenReadingSampleConfigurationIntoInterface.cs" />
     <Compile Include="Reading\WhenReadingUnconfiguredConfigurationIntoInterface.cs" />
     <Compile Include="Reading\WhenReadingUnconfiguredConnectionStringConfigurationIntoClass.cs" />
+    <Compile Include="RuntimeImplementation\WhenImplementingInterfaceButProvidingClass.cs" />
     <Compile Include="WhenAnalyzingExportedTypes.cs" />
+    <Compile Include="WhenCreatingUnsupportedPropertyTypeException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +96,7 @@
       <Name>AppSettingsByConvention</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

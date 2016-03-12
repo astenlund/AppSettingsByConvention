@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using AppSettingsByConvention;
 using AppSettingsByConventionTests.ConfigurationTargets;
 using FluentAssertions;
-using Moq;
 using NUnit.Framework;
 
 namespace AppSettingsByConventionTests.Reading
@@ -14,7 +12,7 @@ namespace AppSettingsByConventionTests.Reading
         [Test]
         public void ShouldWork()
         {
-            var expectedConfig = GetExpectedConfig();
+            var expectedConfig = SampleConfiguration.GetExpectedConfig();
 
             var config = SettingsByConvention.ForInterface<ISampleConfiguration>();
 
@@ -24,34 +22,11 @@ namespace AppSettingsByConventionTests.Reading
         [Test]
         public void ShouldWorkWithRuntimeType()
         {
-            var expectedConfig = GetExpectedConfig();
+            var expectedConfig = SampleConfiguration.GetExpectedConfig();
 
             var config = SettingsByConvention.For(typeof(ISampleConfiguration));
 
             config.ShouldBeEquivalentTo(expectedConfig);
-        }
-
-        private static SampleConfiguration GetExpectedConfig()
-        {
-            var expectedConnectionString =
-                Mock.Of<IConnectionString>(x => x.Value == "CStringForInterface" && x.ProviderName == "PNameForInterface");
-            var expectedConnectionString2 =
-                Mock.Of<IConnectionString>(x => x.Value == "CStringForInterface2");
-
-            var expectedConfig = new SampleConfiguration
-            {
-                Value1 = "InterfaceValue1FromAppConfig",
-                Value2 = 1338,
-                Value3 = false,
-                List = new List<string>
-                {
-                    "two", "three", "four"
-                },
-                Array = new []{"2","3","4"},
-                ConnectionString = expectedConnectionString,
-                ConnectionStringWithoutProviderName = expectedConnectionString2
-            };
-            return expectedConfig;
         }
 
         [Test]

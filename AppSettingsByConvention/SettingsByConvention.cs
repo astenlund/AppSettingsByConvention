@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Reflection;
+using AppSettingsByConvention.RuntimeInterfaceImplementation;
 
 namespace AppSettingsByConvention
 {
@@ -11,8 +11,9 @@ namespace AppSettingsByConvention
     /// The keys should follow the pattern CLASSNAME.PROPERTYNAME
     /// All properties on your config object need to appear in your configuration
     /// 
-    /// To read a connection string, use AppSettingsByConvention.IConnectionString as a property,
-    /// the same naming rules apply.
+    /// To read a connection string value, use string property ending with ConnectionString
+    /// To read a connection string provider name, use string property ending with ConnectionStringProvider
+    /// In both cases the connection string key will be CLASSNAME.PROPERTYNAME, minus "Provider" in the case when getting the provider name.
     /// 
     /// Example use:
     ///   SettingsByConvention.ForInterface<IConfiguration>()
@@ -25,7 +26,7 @@ namespace AppSettingsByConvention
     /// </summary>
     public static class SettingsByConvention
     {
-        public static readonly Dictionary<Type, Func<string, object>> ParserMappings;
+        public static Dictionary<Type, Func<string, object>> ParserMappings { get; }
         public static char ListSeparator { get; set; }
         public static Func<IParser> ParserFactory { get; set; }
 
@@ -49,7 +50,7 @@ namespace AppSettingsByConvention
             MethodInfo createMethod;
             if (type.IsInterface)
             {
-                createMethod = typeof (SettingsByConvention).GetMethod("ForInterface").MakeGenericMethod(type);
+                createMethod = typeof(SettingsByConvention).GetMethod("ForInterface").MakeGenericMethod(type);
             }
             else if (type.IsClass && type.GetConstructor(Type.EmptyTypes) != null)
             {
@@ -59,25 +60,38 @@ namespace AppSettingsByConvention
             {
                 throw new InvalidOperationException($"Type {type} is neither an interface nor a class with an empty constructor.");
             }
-            //null, null = static method that is parameterless
-            return createMethod.Invoke(null, null);
+            try
+            {
+                //null, null = static method that is parameterless
+                return createMethod.Invoke(null, null);
+            }
+            catch (TargetInvocationException exception)
+            {
+                throw exception.InnerException ?? exception;
+            }
         }
 
-        public static T ForClass<T>() where T : class, new()
+        public static TClassWithDefaultConstructor ForClass<TClassWithDefaultConstructor>() where TClassWithDefaultConstructor : class, new()
         {
-            return new AppSettingsIntoClassLoader<T>(GetValueProviders<T>()).Create();
+            return new AppSettingsIntoClassLoader<TClassWithDefaultConstructor>(GetValueProviders<TClassWithDefaultConstructor>()).Create();
         }
 
-        public static T ForInterface<T>() where T : class
+        public static TInterface ForInterface<TInterface>() where TInterface : class
         {
-            return new AppSettingsIntoInterfaceLoader<T>(GetValueProviders<T>()).Create();
+            var configurationType = typeof(TInterface);
+            if (configurationType.IsInterface == false)
+            {
+                throw new InvalidOperationException($"{typeof(TInterface)} is not an interface");
+            }
+            return (TInterface)For(configurationType.ImplementClassWithProperties());
         }
 
         private static IEnumerable<IValueProvider> GetValueProviders<T>() where T : class
         {
             var appSettingValueParser = ParserFactory();
-            yield return new AppSettingValueProvider<T>(appSettingValueParser);
             yield return new ConnectionStringValueProvider<T>();
+            yield return new ConnectionStringProviderNameProvider<T>();
+            yield return new AppSettingValueProvider<T>(appSettingValueParser);
         }
     }
 }

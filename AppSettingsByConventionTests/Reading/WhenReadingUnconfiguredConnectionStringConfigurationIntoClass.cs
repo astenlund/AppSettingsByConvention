@@ -15,7 +15,15 @@ namespace AppSettingsByConventionTests.Reading
         {
             Action getConfig = () => SettingsByConvention.ForClass<UnconfiguredConnectionStringConfiguration>();
             getConfig.ShouldThrow<KeyNotFoundException>()
-                .Which.Message.Should().Be("ConnectionString at key UnconfiguredConnectionStringConfiguration.NotInAppConfig not found");
+                .Which.Message.Should().Be("ConnectionString at key UnconfiguredConnectionStringConfiguration.ConnectionString not found");
+        }
+
+        [Test]
+        public void ShouldNotWorkWithProviderName()
+        {
+            Action getConfig = () => SettingsByConvention.ForClass<UnconfiguredConnectionStringProviderConfiguration>();
+            getConfig.ShouldThrow<KeyNotFoundException>()
+                .Which.Message.Should().Be("ConnectionString at key UnconfiguredConnectionStringProviderConfiguration.ConnectionString not found");
         }
     }
 }

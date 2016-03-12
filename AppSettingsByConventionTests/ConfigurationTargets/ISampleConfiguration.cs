@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using AppSettingsByConvention;
 
 namespace AppSettingsByConventionTests.ConfigurationTargets
 {
@@ -10,7 +9,9 @@ namespace AppSettingsByConventionTests.ConfigurationTargets
         bool Value3 { get; }
         List<string> List { get; }
         string[] Array { get; }
-        IConnectionString ConnectionString { get; }
-        IConnectionString ConnectionStringWithoutProviderName { get; }
+        string ConnectionString { get; }
+        string ConnectionStringProvider { get; }
+        string ImplicitProviderConnectionString { get; }
+        string ImplicitProviderConnectionStringProvider { get; }
     }
 }

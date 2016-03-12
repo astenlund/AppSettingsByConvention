@@ -15,7 +15,7 @@ namespace AppSettingsByConventionTests.Reading
         {
             Action getConfig = () => SettingsByConvention.ForInterface<IUnconfiguredConfiguration>();
             getConfig.ShouldThrow<KeyNotFoundException>()
-                .Which.Message.Should().Be("Value at key IUnconfiguredConfiguration.NotInAppConfig not found");
+                .Which.Message.Should().Be("Value at key UnconfiguredConfiguration.NotInAppConfig not found");
         }
     }
 }
